@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Windows;
@@ -18,32 +19,24 @@ public partial class App : Application
 
     public static IHostBuilder CreateHostBuilder(string[] args) =>
         Host.CreateDefaultBuilder(args)
+            .ConfigureAppConfiguration((context, config) =>
+            {
+                // Add User Secrets
+                var env = context.HostingEnvironment;
+                config.AddUserSecrets<App>();
+            })
             .ConfigureServices((hostContext, services) =>
             {
+                var configuration = hostContext.Configuration;
+
+                // Get connection string from user secrets
+                var connectionString = configuration.GetConnectionString("WeatherAppDb");
+
                 // Register DbContext with SQL Server
                 services.AddDbContext<WeatherAppContext>(options =>
-                    options.UseSqlServer("Your-SQL-Server-Connection-String"));
+                    options.UseSqlServer(connectionString));
 
                 // Register other services
                 services.AddSingleton<MainWindow>();
             });
-
-    protected override async void OnStartup(StartupEventArgs e)
-    {
-        // Resolve MainWindow and show it
-        var mainWindow = AppHost.Services.GetRequiredService<MainWindow>();
-        mainWindow.Show();
-
-        base.OnStartup(e);
-    }
-
-    protected override async void OnExit(ExitEventArgs e)
-    {
-        using (AppHost)
-        {
-            await AppHost.StopAsync();
-        }
-
-        base.OnExit(e);
-    }
 }
