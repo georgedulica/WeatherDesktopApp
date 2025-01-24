@@ -7,6 +7,40 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="104*"/>
+            <RowDefinition Height="113*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="121*"/>
+            <ColumnDefinition Width="278*"/>
+        </Grid.ColumnDefinitions>
 
+        <TextBox Name="LocationTextBox"
+                 Height="30" 
+                 VerticalAlignment="Top" 
+                 Margin="32,56,477,0"
+                 Grid.Column="3"
+                 TextAlignment="Center"
+                 VerticalContentAlignment="Center"
+                 HorizontalContentAlignment="Center"
+                 Padding="0"
+                 AcceptsReturn="False"
+                 BorderThickness="1"
+                 BorderBrush="Black" Grid.ColumnSpan="2" />
+
+        <Button Content="Check the Location" 
+                VerticalAlignment="Top" 
+                HorizontalAlignment="Left" 
+                FontFamily="Comic Sans MS" 
+                FontSize="16" 
+                FontWeight="Bold" 
+                Foreground="Black" 
+                Background="DeepSkyBlue" 
+                BorderThickness="0"
+                Margin="156,56,0,0" Click="Button_Click" Height="30" Width="177" Grid.Column="4" />
     </Grid>
 </Window>
